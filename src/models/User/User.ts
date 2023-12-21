@@ -1,9 +1,10 @@
 // Author: Tazbin Ahad
 // Last Modified Date: 12-12-2023
 
+import { config } from "config";
 import { DataTypes, Model, Sequelize } from "sequelize";
-import sequelize from "../../config/db";
 
+// Define the attributes for the User model
 interface UserAttributes {
   id: number;
   username: string;
@@ -12,7 +13,8 @@ interface UserAttributes {
   created_at: Date;
   updated_at: Date;
 }
-
+// Define the User class that extends the Sequelize Model
+// This class represents the User table in the database
 class User extends Model implements UserAttributes {
   public id!: number;
   public username!: string;
@@ -22,6 +24,7 @@ class User extends Model implements UserAttributes {
   public readonly updated_at!: Date;
 }
 
+// Initialize the User model with its attributes and options
 User.init(
   {
     id: {
@@ -53,7 +56,7 @@ User.init(
     },
   },
   {
-    sequelize,
+    sequelize: config.database,
     modelName: "User",
     tableName: "Users",
     timestamps: false,

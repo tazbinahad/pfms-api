@@ -2,10 +2,10 @@
 // Last Modified Date: 12-12-2023
 
 import express from "express";
-import AuthRoutes from "./Auth/Auth";
+import { AuthRoutes } from "./Auth/Auth";
 
-const router = express.Router();
+const routes = express.Router();
 // Define your routes
-router.use("/auth", AuthRoutes);
+routes.use("/auth", AuthRoutes);
 
-export default router;
+export default routes;
