@@ -5,7 +5,7 @@ import express from "express";
 import dotenv from "dotenv";
 import swaggerUi from "swagger-ui-express";
 import * as swaggerDocument from "../api-docs.json";
-import { errorHandler } from "middlewares";
+import { authenticateToken, errorHandler } from "middlewares";
 import { config } from "config";
 import routes from "routes";
 
@@ -13,6 +13,9 @@ dotenv.config();
 const app = express();
 
 app.use(express.json());
+
+// Token authentication middleware
+app.use(authenticateToken);
 
 app.use("/api", routes);
 

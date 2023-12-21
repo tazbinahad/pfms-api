@@ -3,6 +3,8 @@
 
 import sequelize from "./database";
 
+const unauthenticatedPaths = ["/api/auth/login"];
+
 export const config = {
   port: process.env.PORT || 3000,
   database: sequelize,
@@ -10,4 +12,5 @@ export const config = {
   refreshTokenSecret: process.env.REFRESH_TOKEN_SECRET,
   accessTokenLife: process.env.ACCESS_TOKEN_LIFE,
   refreshTokenLife: process.env.REFRESH_TOKEN_LIFE,
+  unauthenticatedPaths,
 };

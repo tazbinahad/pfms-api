@@ -69,8 +69,8 @@ export class AuthService {
       const isPasswordValid = await bycrypt.compare(password, user.password);
       if (!isPasswordValid) throw new Error("Invalid password");
 
-      const accessToken = await generateAccessToken(user.id);
-      const refreshToken = await generateRefreshToken(user.id);
+      const accessToken = await generateAccessToken(user);
+      const refreshToken = await generateRefreshToken(user);
       return { accessToken, refreshToken };
     } catch (error) {
       throw error;
@@ -91,7 +91,7 @@ export class AuthService {
       const user = await User.findByPk(payload.id);
       if (!user) throw new Error("Invalid user");
 
-      const accessToken = await generateAccessToken(user.id);
+      const accessToken = await generateAccessToken(user);
 
       return { accessToken };
     } catch (error) {
