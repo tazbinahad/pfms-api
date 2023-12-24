@@ -3,7 +3,7 @@
 import express from "express";
 import AuthController from "../../controllers/Auth/AuthController";
 import { validateRequestBody } from "middlewares";
-import { CreateUserSchema, LoginUserSchema } from "schemas";
+import { CreateUserSchema, LoginUserSchema, RoleSchema } from "schemas";
 
 const AuthRoutes = express.Router();
 /* =========== Routes: Auth/users =========== */
@@ -26,5 +26,18 @@ AuthRoutes.post(
   validateRequestBody(LoginUserSchema),
   AuthController.loginUser
 );
+// Refresh token
+AuthRoutes.post("/refresh-token", AuthController.refreshToken);
+
+/* Routes: Auth/Role */
+// Create a role
+AuthRoutes.post(
+  "/roles",
+  validateRequestBody(RoleSchema),
+  AuthController.createRole
+);
+AuthRoutes.get("/roles/:id", AuthController.getRole);
+AuthRoutes.put("/roles/:id", AuthController.updateRole);
+AuthRoutes.delete("/roles/:id", AuthController.deleteRole);
 
 export { AuthRoutes };

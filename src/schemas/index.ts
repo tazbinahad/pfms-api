@@ -3,4 +3,6 @@ export {
   CreateUserSchemaType,
   LoginUserSchema,
   LoginUserSchemaType,
+  RoleSchema,
+  RoleSchemaType,
 } from "./Auth/AuthSchema";

@@ -29,3 +29,11 @@ export interface LoginUserSchemaType {
   login: string;
   password: string;
 }
+// Schema: Role Schema
+export const RoleSchema = Joi.object({
+  name: Joi.string().required(),
+}).messages(customMessages);
+
+export interface RoleSchemaType {
+  name: string;
+}

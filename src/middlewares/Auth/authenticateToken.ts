@@ -16,14 +16,14 @@ export const authenticateToken = (
   res: Response,
   next: NextFunction
 ) => {
-  if (config.unauthenticatedPaths.includes(req.path)) {
+  if (!config.unauthenticatedPaths.includes(req.path)) {
     return next();
   }
   const authHeader = req.headers["authorization"];
   const token = authHeader && authHeader.split(" ")[1];
   if (token == null) {
     // If no token was provided, send an error response
-    return res.status(401).json({ message: 'No token provided' });
+    return res.status(401).json({ message: "No token provided" });
   }
 
   jwt.verify(
@@ -32,7 +32,7 @@ export const authenticateToken = (
     (err: any, user: any) => {
       if (err) {
         // If the token is not valid, send an error response
-        return res.status(403).json({ message: 'Invalid token' });
+        return res.status(403).json({ message: "Invalid token" });
       }
 
       // If the token is valid, add the user to the request object and call the next middleware function

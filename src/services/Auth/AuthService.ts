@@ -1,11 +1,25 @@
 // services/AuthService.ts
 
 import bycrypt from "bcryptjs";
-import { User, UserAttributes, User as UserType } from "models";
-import { generateAccessToken, generateRefreshToken } from "utils";
+import {
+  Role,
+  RoleAttributes,
+  User,
+  UserAttributes,
+  User as UserType,
+} from "models";
+import {
+  ApplicationError,
+  generateAccessToken,
+  generateRefreshToken,
+} from "utils";
 import jwt from "jsonwebtoken";
 import { Op } from "sequelize";
-import { CreateUserSchemaType, LoginUserSchemaType } from "schemas";
+import {
+  CreateUserSchemaType,
+  LoginUserSchemaType,
+  RoleSchemaType,
+} from "schemas";
 export class AuthService {
   // Service: User Create
   static async createUser(data: CreateUserSchemaType): Promise<UserType> {
@@ -22,7 +36,7 @@ export class AuthService {
   static async getUserById(id: number): Promise<UserType> {
     try {
       const user = await User.findByPk(id);
-      if (!user) throw new Error("User not found");
+      if (!user) throw new ApplicationError("User not found", 404);
       return user;
     } catch (error) {
       throw error;
@@ -94,6 +108,50 @@ export class AuthService {
       const accessToken = await generateAccessToken(user);
 
       return { accessToken };
+    } catch (error) {
+      throw error;
+    }
+  }
+  // Service: Create a role
+  static async createRole({ name }: RoleSchemaType): Promise<RoleAttributes> {
+    try {
+      const role = await Role.create({ name });
+      return role;
+    } catch (error) {
+      throw error;
+    }
+  }
+  // Service: Get a role by id
+  static async getRole(id: number): Promise<RoleAttributes> {
+    try {
+      const role = await Role.findByPk(id);
+      if (!role) throw new Error("Role not found");
+      return role;
+    } catch (error) {
+      throw error;
+    }
+  }
+  // Service: Update a role by id
+  static async updateRole(
+    id: number,
+    data: Partial<RoleAttributes>
+  ): Promise<RoleAttributes> {
+    try {
+      const role = await Role.findByPk(id);
+      if (!role) throw new Error("Role not found");
+      await role.update(data);
+      return role;
+    } catch (error) {
+      throw error;
+    }
+  }
+  // Service: Delete a role by id
+  static async deleteRole(id: number): Promise<{ message: string }> {
+    try {
+      const role = await Role.findByPk(id);
+      if (!role) throw new Error("Role not found");
+      await role.destroy();
+      return { message: "Role deleted" };
     } catch (error) {
       throw error;
     }

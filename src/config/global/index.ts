@@ -3,7 +3,7 @@
 
 import sequelize from "./database";
 
-const unauthenticatedPaths = ["/api/auth/login"];
+const unauthenticatedPaths = ["/api-docs", "/auth/login"];
 
 export const config = {
   port: process.env.PORT || 3000,
